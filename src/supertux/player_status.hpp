@@ -32,6 +32,15 @@ static const float BORDER_Y = 10;
 enum BonusType {
   NO_BONUS, GROWUP_BONUS, FIRE_BONUS, ICE_BONUS, AIR_BONUS, EARTH_BONUS
 };
+enum MoveType {
+  NO_MOVE
+};
+enum CosmeticType {
+  NO_COSMETIC, BEHOLDER_COSMETIC
+};
+enum SoundType {
+  NO_SOUND
+};
 class DrawingContext;
 
 /**
@@ -57,6 +66,9 @@ public:
 public:
   int  coins;
   BonusType bonus;
+  MoveType move;
+  CosmeticType cosmetic;
+  SoundType sound;
   int max_fire_bullets; /**< maximum number of fire bullets in play */
   int max_ice_bullets; /**< maximum number of ice bullets in play */
   int max_air_time; /**<determines maximum number of seconds player can float in air */

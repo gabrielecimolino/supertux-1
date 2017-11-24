@@ -34,6 +34,7 @@ KeyboardMenu::KeyboardMenu(InputManager& input_manager) :
   add_controlfield(Controller::RIGHT,      _("Right"));
   add_controlfield(Controller::JUMP,       _("Jump"));
   add_controlfield(Controller::ACTION,     _("Action"));
+  add_controlfield(Controller::SHOPMOVE,   _("Shop Move"));
   add_controlfield(Controller::PEEK_LEFT,  _("Peek Left"));
   add_controlfield(Controller::PEEK_RIGHT, _("Peek Right"));
   add_controlfield(Controller::PEEK_UP,    _("Peek Up"));
@@ -129,6 +130,8 @@ KeyboardMenu::refresh()
   if (micf) micf->change_input(get_key_name(kbd_cfg.reversemap_key(Controller::JUMP)));
   micf = dynamic_cast<ItemControlField*>(&get_item_by_id((int) Controller::ACTION));
   if (micf) micf->change_input(get_key_name(kbd_cfg.reversemap_key(Controller::ACTION)));
+  micf = dynamic_cast<ItemControlField*>(&get_item_by_id((int) Controller::SHOPMOVE));
+  if (micf) micf->change_input(get_key_name(kbd_cfg.reversemap_key(Controller::SHOPMOVE)));
   micf = dynamic_cast<ItemControlField*>(&get_item_by_id((int) Controller::PEEK_LEFT));
   if (micf) micf->change_input(get_key_name(kbd_cfg.reversemap_key(Controller::PEEK_LEFT)));
   micf = dynamic_cast<ItemControlField*>(&get_item_by_id((int) Controller::PEEK_RIGHT));

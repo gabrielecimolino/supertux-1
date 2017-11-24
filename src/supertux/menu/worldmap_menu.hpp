@@ -21,6 +21,7 @@
 
 enum WorldMapMenuIDs {
   MNID_RETURNWORLDMAP,
+  MNID_SHOP,
   MNID_QUITWORLDMAP
 };
 

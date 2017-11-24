@@ -30,6 +30,7 @@ public:
 
     JUMP,
     ACTION,
+    SHOPMOVE,
 
     START,
     ESCAPE,

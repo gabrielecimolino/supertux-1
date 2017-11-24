@@ -987,4 +987,105 @@
          (hitbox 16 14 32 64)
          (mirror-action "santa-buttjump-right"))
 
+; beholder Tux
+
+       (action
+         (name "beholder-walk-right")
+         (fps 15.0)
+         (hitbox 8 16 32 32)
+         (images "beholder/beholder.png"))
+
+       (action
+         (name "beholder-walk-left")
+         (fps 15.0)
+         (hitbox 8 16 32 32)
+         (mirror-action "beholder-walk-right"))
+
+       (action
+         (name "beholder-run-right")
+         (fps 30)
+         (hitbox 8 16 32 32)
+         (images "beholder/beholder.png"))
+
+       (action
+         (name "beholder-run-left")
+         (fps 25.0)
+         (hitbox 8 16 32 32)
+         (mirror-action "beholder-run-right"))
+
+       (action
+         (name "beholder-stand-right")
+         (fps 15.0)
+         (hitbox 8 16 32 32)
+         (images "beholder/beholder.png"))
+
+       (action
+         (name "beholder-stand-left")
+         (fps 15.0)
+         (hitbox 8 16 32 32)
+         (mirror-action "beholder-stand-right"))
+
+       (action
+         (name "beholder-jump-right")
+         (fps 15.0)
+         (hitbox 8 16 32 32)
+         (images "beholder/beholder.png"))
+
+       (action
+         (name "beholder-jump-left")
+         (fps 15.0)
+         (hitbox 8 16 32 32)
+         (mirror-action "beholder-jump-right"))
+
+       (action
+         (name "beholder-skid-right")
+         (hitbox 8 17 32 32)
+         (images "beholder/beholder.png"))
+
+       (action
+         (name "beholder-skid-left")
+         (hitbox 8 17 32 32)
+         (mirror-action "beholder-skid-right"))
+
+       (action
+         (name "beholder-kick-right")
+         (hitbox 8 16 32 32)
+         (images "beholder/beholder.png"))
+
+       (action
+         (name "beholder-kick-left")
+         (hitbox 8 16 32 32)
+         (mirror-action "beholder-kick-right"))
+
+       (action
+         (name "beholder-idle-right")
+         (fps 5.0)
+         (hitbox 8 16 32 32)
+         (images "beholder/beholder.png"))
+
+       (action
+         (name "beholder-idle-left")
+         (hitbox 8 16 32 32)
+         (mirror-action "beholder-idle-right"))
+
+       (action
+         (name "beholder-climbing-right")
+         (hitbox 8 16 32 32)
+         (images "beholder/beholder.png"))
+
+       (action
+         (name "beholder-climbing-left")
+         (hitbox 8 16 32 32)
+         (mirror-action "beholder-climbing-right"))
+
+       (action
+         (name "grow-right")
+         (fps 15.0)
+         (hitbox 16 13 32 64)
+         (images "beholder/beholder.png"))
+
+       (action
+         (name "grow-left")
+         (hitbox 16 13 32 64)
+         (mirror-action "grow-right"))
 )

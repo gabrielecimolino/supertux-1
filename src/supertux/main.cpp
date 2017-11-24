@@ -49,6 +49,7 @@ extern "C" {
 #include "physfs/physfs_sdl.hpp"
 #include "scripting/squirrel_util.hpp"
 #include "scripting/scripting.hpp"
+#include "shop/shop.hpp"
 #include "sprite/sprite_manager.hpp"
 #include "supertux/command_line_arguments.hpp"
 #include "supertux/game_manager.hpp"
@@ -380,6 +381,8 @@ Main::launch_game()
   SoundManager sound_manager;
   sound_manager.enable_sound(g_config->sound_enabled);
   sound_manager.enable_music(g_config->music_enabled);
+
+  Shop shop;
 
   Console console(console_buffer);
 

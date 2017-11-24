@@ -31,6 +31,8 @@ WorldmapMenu::WorldmapMenu()
   add_entry(MNID_RETURNWORLDMAP, _("Continue"));
   add_submenu(_("Options"), MenuStorage::INGAME_OPTIONS_MENU);
   add_hl();
+  add_submenu(_("Shop"), MenuStorage::SHOP_MENU);
+  add_hl();
   add_entry(MNID_QUITWORLDMAP, _("Leave World"));
 }
 
@@ -41,6 +43,10 @@ WorldmapMenu::menu_action(MenuItem* item)
   {
     case MNID_RETURNWORLDMAP:
       MenuManager::instance().clear_menu_stack();
+      break;
+
+    case MNID_SHOP:
+      MenuManager::instance().push_menu(MenuStorage::SHOP_MENU);
       break;
 
     case MNID_QUITWORLDMAP:

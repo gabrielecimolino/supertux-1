@@ -18,12 +18,14 @@
 #include "supertux/savegame.hpp"
 
 #include <algorithm>
+#include <iostream>
 
 #include "physfs/ifile_streambuf.hpp"
 #include "physfs/physfs_file_system.hpp"
 #include "scripting/scripting.hpp"
 #include "scripting/serialize.hpp"
 #include "scripting/squirrel_util.hpp"
+#include "shop/shop.hpp"
 #include "supertux/player_status.hpp"
 #include "util/file_system.hpp"
 #include "util/log.hpp"
@@ -188,6 +190,16 @@ Savegame::load()
             scripting::load_squirrel_table(vm, -1, state);
             sq_pop(vm, 2);
           }
+
+          /* SHOP */
+          auto shop = Shop::current();
+          ReaderMapping shopReader;
+          if(!mapping.get("shop", shopReader)){
+            throw std::runtime_error("No shop section in savegame");
+          }
+          else{
+            shop->read(shopReader);
+          }
         }
       }
     }
@@ -281,6 +293,13 @@ Savegame::save()
   }
   sq_pop(vm, 1);
   writer.end_list("state");
+
+  /* SHOP */
+  auto shop = Shop::current();
+
+  writer.start_list("shop");
+  shop->write(writer);
+  writer.end_list("shop");
 
   writer.end_list("supertux-savegame");
 }

@@ -19,6 +19,7 @@
 #include "supertux/globals.hpp"
 #include "supertux/menu/addon_menu.hpp"
 #include "supertux/menu/cheat_menu.hpp"
+#include "shop/shop_menu.hpp"
 #include "supertux/menu/contrib_menu.hpp"
 #include "supertux/menu/editor_menu.hpp"
 #include "supertux/menu/editor_level_menu.hpp"
@@ -98,6 +99,9 @@ MenuStorage::create(MenuId menu_id)
 
     case CHEAT_MENU:
       return std::unique_ptr<Menu>(new CheatMenu);
+
+    case SHOP_MENU:
+      return std::unique_ptr<Menu>(new ShopMenu);
 
     case WORLDSET_MENU:
       return std::unique_ptr<Menu>(new WorldSetMenu);

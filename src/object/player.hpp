@@ -291,6 +291,7 @@ private:
   bool jump_early_apex;
   bool on_ice;
   bool ice_this_frame;
+  bool canDoubleJump;
   SpritePtr lightsprite;
   SpritePtr powersprite;
 

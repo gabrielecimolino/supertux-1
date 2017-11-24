@@ -30,6 +30,8 @@
 #include "object/portable.hpp"
 #include "object/sprite_particle.hpp"
 #include "scripting/squirrel_util.hpp"
+#include "shop/shop.hpp"
+#include "supertux/flip_level_transformer.hpp"
 #include "supertux/game_session.hpp"
 #include "supertux/gameconfig.hpp"
 #include "supertux/sector.hpp"
@@ -135,6 +137,7 @@ Player::Player(PlayerStatus* _player_status, const std::string& name_) :
   jump_early_apex(false),
   on_ice(false),
   ice_this_frame(false),
+  canDoubleJump(true),
   lightsprite(SpriteManager::current()->create("images/creatures/tux/light.sprite")),
   powersprite(SpriteManager::current()->create("images/creatures/tux/powerups.sprite")),
   dir(RIGHT),
@@ -342,7 +345,7 @@ Player::update(float elapsed_time)
   }
 
   // set fall mode...
-  if(on_ground()) {
+  if(on_ground() || canDoubleJump) {
     fall_mode = ON_GROUND;
     last_ground_y = get_pos().y;
   } else {
@@ -353,7 +356,7 @@ Player::update(float elapsed_time)
   }
 
   // check if we landed
-  if(on_ground()) {
+  if(on_ground() || canDoubleJump) {
     jumping = false;
     if (backflipping && (backflip_timer.get_timegone() > 0.15f)) {
       backflipping = false;
@@ -637,7 +640,7 @@ Player::do_backflip() {
 
 void
 Player::do_jump(float yspeed) {
-  if (!on_ground())
+  if (!on_ground() && !canDoubleJump)
     return;
 
   physic.set_velocity_y(yspeed);
@@ -646,11 +649,18 @@ Player::do_jump(float yspeed) {
   on_ground_flag = false;
   can_jump = false;
 
-  // play sound
-  if (is_big()) {
-    SoundManager::current()->play("sounds/bigjump.wav");
-  } else {
-    SoundManager::current()->play("sounds/jump.wav");
+  auto shop = Shop::current();
+  std::string currentJumpSound = shop->getCurrentJumpSound();
+  if(currentJumpSound != ""){
+    SoundManager::current()->play(currentJumpSound);
+  }
+  else{
+    // play sound
+    if (is_big()) {
+      SoundManager::current()->play("sounds/bigjump.wav");
+    } else {
+      SoundManager::current()->play("sounds/jump.wav");
+    }
   }
 }
 
@@ -795,11 +805,31 @@ Player::handle_input()
   if (!backflipping && !stone) handle_horizontal_input();
 
   /* Jump/jumping? */
-  if (on_ground())
+  if (on_ground()){
     can_jump = true;
+    canDoubleJump = true;
+  }
+  if(!can_jump && canDoubleJump){
+    can_jump = true;
+    canDoubleJump = false;
+    physic.set_gravity_modifier(1.0f);
+  }
 
   /* Handle vertical movement: */
   if (!stone) handle_vertical_input();
+
+  /* Shop Moves */
+  if (controller->pressed(Controller::SHOPMOVE)){
+    auto shop = Shop::current();
+    std::string shopMove = shop->getCurrentMove();
+
+    if(shopMove == "flip"){
+      FlipLevelTransformer flipTransformer;
+      auto sector = Sector::current();
+
+      flipTransformer.transform_sector(sector);
+    }
+  }
 
   /* Shoot! */
   auto sector = Sector::current();
@@ -814,7 +844,11 @@ Player::handle_input()
       auto new_bullet = std::make_shared<Bullet>(pos, physic.get_velocity_x(), dir, player_status->bonus);
       sector->add_object(new_bullet);
 
-      SoundManager::current()->play("sounds/shoot.wav");
+      auto shop = Shop::current();
+      std::string fireballSound = shop->getCurrentFireballSound();
+      if(fireballSound == "")
+        fireballSound = "sounds/shoot.wav";
+      SoundManager::current()->play(fireballSound);
       shooting_timer.start(SHOOTING_TIME);
     }
   }
@@ -1160,7 +1194,18 @@ Player::draw(DrawingContext& context)
   std::string sa_prefix = "";
   std::string sa_postfix = "";
 
-  if (player_status->bonus == GROWUP_BONUS)
+  auto shop = Shop::current();
+  std::string currentCosmetic = shop->getCurrentCosmetic();
+
+  // if(player_status->cosmetic != NO_COSMETIC){
+  //   if (player_status->cosmetic == BEHOLDER_COSMETIC)
+  //     sa_prefix = "beholder";
+  // }
+  if(currentCosmetic != ""){
+    log_debug << currentCosmetic << std::endl;
+    sa_prefix = shop->getCurrentCosmetic();
+  }
+  else if (player_status->bonus == GROWUP_BONUS)
     sa_prefix = "big";
   else if (player_status->bonus == FIRE_BONUS)
     if(g_config->christmas_mode)

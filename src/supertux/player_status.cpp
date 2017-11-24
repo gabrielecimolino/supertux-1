@@ -39,6 +39,9 @@ PlayerStatus::PlayerStatus() :
   /* Do we really want -Weffc++ to bully us into duplicating code from "reset" here? */
   coins(START_COINS),
   bonus(NO_BONUS),
+  move(NO_MOVE),
+  cosmetic(NO_COSMETIC),
+  sound(NO_SOUND),
   max_fire_bullets(0),
   max_ice_bullets(0),
   max_air_time(0),

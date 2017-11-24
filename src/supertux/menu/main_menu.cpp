@@ -70,7 +70,6 @@ MainMenu::menu_action(MenuItem* item)
       MenuManager::instance().push_menu(MenuStorage::ADDON_MENU);
       break;
 
-
     case MNID_CREDITS:
       MenuManager::instance().clear_menu_stack();
       ScreenManager::current()->push_screen(std::unique_ptr<Screen>(new TextScroller("credits.stxt")),
